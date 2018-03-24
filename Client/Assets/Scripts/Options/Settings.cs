@@ -6,6 +6,7 @@ using UnityEngine;
 [System.Serializable]
 public class DebugOption
 {
+    public bool showFPSMeter;
     public bool readPackedCode;
     public bool readPackedData;
     public bool readPackedView;
@@ -17,12 +18,13 @@ public class DebugOption
 
 public class Settings
 {
+    public static bool showFPSMeter; 
     public static bool readPackedCode;
     public static bool readPackedData;
     public static bool readPackedView;
+    public static bool fullFrameRate;
     public static bool skipProgramUpdate;
     public static bool skipResouceUpdate;
-
     public static string externalPath;
 
     public static void ParseCommandLine()
@@ -37,15 +39,17 @@ public class Settings
     public static void InitSettings(DebugOption options)
     {
         //app相关参数设置
-        Application.targetFrameRate = options.fullFrameRate ? 60 : 30;
+        Application.targetFrameRate = options.fullFrameRate ? -1 : 30;
         Time.maximumDeltaTime = 0.25f;
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
         ScreenConfig.init();
 
         //开发期相关参数设置
+        showFPSMeter = options.showFPSMeter;
         readPackedCode = options.readPackedCode;
         readPackedData = options.readPackedData;
         readPackedView = options.readPackedView;
+        fullFrameRate = options.fullFrameRate;
         skipProgramUpdate = options.skipProgramUpdate;
         skipResouceUpdate = options.skipResouceUpdate;
 

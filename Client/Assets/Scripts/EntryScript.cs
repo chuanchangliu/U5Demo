@@ -7,10 +7,16 @@ public class EntryScript : MonoBehaviour {
     public DebugOption options;
 
 	// Use this for initialization
-	void Start ()
+	void Awake()
     {
         Settings.InitSettings(options);
         Settings.ParseCommandLine();
         Settings.ReviewSettings();
 	}
+
+    private void Start()
+    {
+        if (Settings.showFPSMeter)
+            gameObject.AddComponent<FPSMeter>();
+    }
 }
