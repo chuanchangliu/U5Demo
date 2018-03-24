@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<stringtable>
+    <string origin="checking for update" translation="正在检查更新……"/>
+    <string origin="failed to check for update. retry ?" translation="无法连接更新服务器，是否重试？\n\n（重试前请检查您的网络是否正常）"/>
+    <string origin="failed to check for update" translation="无法连接更新服务器"/>
+    <string origin="update server has error" translation="更新服务器发现错误"/>
+    <string origin="local version: {0}" translation="当前版本：{0}"/>
+    <string origin="has compatible new version: {0}. update now ?" translation="客户端有新版本：{0}\n\n是否马上更新？"/>
+    <string origin="has required new version: {0}. update now" translation="客户端有新版本：{0}，需要更新后才能进入游戏\n\n点击确定开始更新"/>
+    <string origin="must update" translation="更新后才能进入游戏"/>
+    <string origin="auto update not supported" translation="当前版本不支持自动更新"/>
+    <string origin="auto update not supported, please update manually" translation="当前版本不支持自动更新，请登录游戏官网下载安装包"/>
+    <string origin="downloading installer" translation="正在下载安装包……"/>
+    <string origin="download error" translation="下载时发生错误，请稍候再试"/>
+    <string origin="reading installer" translation="正在读取安装包……"/>
+    <string origin="pack file error" translation="读取安装包失败，请稍候再试"/>
+    <string origin="confirm download via wireless network" translation="当前网络为2G/3G/4G蜂窝移动网络，可能会产生流量费用\n\n是否进行下载？"/>
+    <string origin="update failed" translation="更新失败，请稍候再试"/>
+    <string origin="installing game data" translation="正在解压缩游戏数据……"/>
+    <string origin="expansion pack {0} installation failed" translation="扩展包 {0} 安装失败"/>
+</stringtable>
