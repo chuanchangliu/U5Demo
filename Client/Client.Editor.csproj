@@ -287,6 +287,8 @@
     <None Include="Assets\3rd\NGUI\Resources\Shaders\Unlit - Transparent Packed 3.shader" />
     <None Include="Assets\3rd\NGUI\Resources\Shaders\Unlit - Transparent Packed.shader" />
     <None Include="Assets\3rd\ToLua\readme.txt" />
+    <None Include="Assets\Art\UIAtlases\inhouse_Common.txt" />
+    <None Include="Assets\Art\UIAtlases\main.txt" />
     <None Include="Assets\Resources\Fonts\numbers\font_number.txt" />
     <None Include="Assets\Resources\Fonts\numbers\font_number1.txt" />
     <None Include="Assets\Resources\Fonts\numbers\font_number_daojishi.txt" />
@@ -296,7 +298,6 @@
     <None Include="Assets\Resources\Fonts\numbers\font_number_shanghai2.txt" />
     <None Include="Assets\Resources\launcher\stringtable.xml" />
     <None Include="Assets\Resources\patcher\stringtable.txt" />
-    <None Include="Assets\inhouseAtlas\inhouse_Common.txt" />
     <None Include="Assets\link.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -18,5 +18,14 @@ public class EntryScript : MonoBehaviour {
     {
         if (Settings.showFPSMeter)
             gameObject.AddComponent<FPSMeter>();
+
+        GameObject masterObj = GameObject.Find("GameManager");
+        if (masterObj == null){
+            masterObj = new GameObject("GameManager");
+        }
+
+        masterObj.AddComponent<GameMaster>();
+
+        DestroyImmediate(gameObject);
     }
 }
