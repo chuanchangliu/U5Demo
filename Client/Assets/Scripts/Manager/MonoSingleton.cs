@@ -16,8 +16,8 @@ public abstract class MonoSingleton<T>: MonoBehaviour where T : MonoSingleton <T
                 {
                     string objectName = typeof(T).Name;
 
-                    _instance = GameObject.FindObjectOfType(typeof(T)) as T;
-                    if (FindObjectsOfType(typeof(T)).Length > 1)
+                    _instance = GameObject.FindObjectOfType<T>();
+                    if (GameObject.FindObjectsOfType<T>().Length > 1)
                     {
                         Debug.LogError("[Singleton] " + objectName + " is more than one! please check and fix it.");
                         return _instance;
