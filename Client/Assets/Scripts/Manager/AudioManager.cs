@@ -5,6 +5,10 @@ using UnityEngine;
 [RequireComponent(typeof(AudioListener))]
 public class AudioManager : MonoSingleton<AudioManager>
 {
+    private AudioManager()
+    {
+        Debug.Log("====private AudioManager()====");
+    }
 
     public void Init()
     {

@@ -7,7 +7,6 @@ public class GameMaster : MonoBehaviour
     void Awake()
     {
         DontDestroyOnLoad(this);
-
         CreateManagers();
     }
 
