@@ -2,26 +2,40 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameMaster : MonoBehaviour
+public class GameMaster : MonoSingleton<GameMaster>
 {
-    void Awake()
+
+    public delegate void CallbackVoid();
+
+    public CallbackVoid onDestroy = null;
+    public CallbackVoid onApplicationQuit = null;
+
+
+    public void Init()
     {
-        DontDestroyOnLoad(this);
+        Debug.Log("====GameMaster Init====");
+        DontDestroyOnLoad(gameObject);
         CreateManagers();
     }
 
     // Use this for initialization
-    void Start () {
-		
-	}
+    void Start (){}
 	
 	// Update is called once per frame
 	void Update () {
 		
 	}
 
+    void OnDestroy()
+    {
+        Debug.Log("====OnDestroy====");
+        if (onDestroy != null)
+            onDestroy();
+    }
+
     void CreateManagers()
     {
+        TrackManager.Instance.Init();
         AudioManager.Instance.Init();
     }
 
@@ -29,5 +43,12 @@ public class GameMaster : MonoBehaviour
     {
         Debug.Log("====Game Awake=====");
         yield break;
+    }
+
+    void OnApplicationQuit()
+    {
+        Debug.Log("====OnApplicationQuit====");
+        if (onApplicationQuit != null)
+            onApplicationQuit();
     }
 }

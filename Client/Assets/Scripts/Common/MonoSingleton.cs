@@ -6,7 +6,8 @@ public abstract class MonoSingleton<T> : MonoBehaviour where T : MonoSingleton<T
 
     public static T Instance
     {
-        get { 
+        get
+        {
             if (_instance == null)
             {
                 _instance = FindObjectOfType<T>();
@@ -35,14 +36,14 @@ public abstract class MonoSingleton<T> : MonoBehaviour where T : MonoSingleton<T
                 }
             }
 
-            return instance;
+            return _instance;
         }
 
-
-        protected virtual void OnDestroy()
-        {
-            instance = null;
-        }
     }
 
+    protected virtual void OnDestroy()
+    {
+        Debug.Log("====MonoSingleton OnDestory");
+        _instance = null;
+    }
 }

@@ -4,7 +4,7 @@ using System.Reflection;
 using UnityEngine;
 using System;
 
-public abstract class NormSingleton<T> where T : MonoSingleton<T>
+public abstract class NormSingleton<T> where T : NormSingleton<T>
 {
 
     public static T _instance;

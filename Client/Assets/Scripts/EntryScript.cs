@@ -19,6 +19,7 @@ public class EntryScript : MonoBehaviour {
         if (Settings.showFPSMeter)
             gameObject.AddComponent<FPSMeter>();
 
+        /*
         GameObject masterObj = GameObject.Find("GameManager");
         if (masterObj == null){
             masterObj = new GameObject("GameManager");
@@ -27,5 +28,8 @@ public class EntryScript : MonoBehaviour {
         masterObj.AddComponent<GameMaster>();
 
         DestroyImmediate(gameObject);
+        */
+
+        GameMaster.Instance.Init();
     }
 }

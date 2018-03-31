@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(AudioListener))]
-public class AudioManager : MonoSingleton<AudioManager>
+public class AudioManager : NormSingleton<AudioManager>
 {
     private AudioManager()
     {
