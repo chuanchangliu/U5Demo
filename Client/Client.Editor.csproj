@@ -242,6 +242,7 @@
     <Compile Include="Assets\3rd\ToLua\Editor\ToLuaMenu.cs" />
     <Compile Include="Assets\3rd\ToLua\Editor\ToLuaTree.cs" />
     <Compile Include="Assets\Editor\CustomSettings.cs" />
+    <Compile Include="Assets\Editor\ExtendTools.cs" />
     <Compile Include="Assets\Editor\XcodeProjectMod.cs" />
   </ItemGroup>
   <ItemGroup>

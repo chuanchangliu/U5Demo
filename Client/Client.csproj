@@ -364,6 +364,8 @@
     <Compile Include="Assets\Scripts\ConstDefine\NotiConst.cs" />
     <Compile Include="Assets\Scripts\EntryScript.cs" />
     <Compile Include="Assets\Scripts\Framework\GameMaster.cs" />
+    <Compile Include="Assets\Scripts\Helper\FPSMeter.cs" />
+    <Compile Include="Assets\Scripts\Helper\Settings.cs" />
     <Compile Include="Assets\Scripts\Manager\AudioManager.cs" />
     <Compile Include="Assets\Scripts\Manager\EventManager.cs" />
     <Compile Include="Assets\Scripts\Manager\GUIManager.cs" />
@@ -375,15 +377,12 @@
     <Compile Include="Assets\Scripts\ObjectPool\GameObjectPool.cs" />
     <Compile Include="Assets\Scripts\ObjectPool\ObjectPool.cs" />
     <Compile Include="Assets\Scripts\ObjectPool\TestObjectClass.cs" />
-    <Compile Include="Assets\Scripts\Options\LogOutput.cs" />
-    <Compile Include="Assets\Scripts\Options\Settings.cs" />
     <Compile Include="Assets\Scripts\Update\ExpansionPackManager.cs" />
     <Compile Include="Assets\Scripts\Update\Patcher.cs" />
     <Compile Include="Assets\Scripts\Update\UIPanelUpdate.cs" />
     <Compile Include="Assets\Scripts\Update\UpdateManager.cs" />
     <Compile Include="Assets\Scripts\Update\UpdateUIManager.cs" />
     <Compile Include="Assets\Scripts\Utility\CjsonConfig.cs" />
-    <Compile Include="Assets\Scripts\Utility\FPSMeter.cs" />
     <Compile Include="Assets\Scripts\Utility\LayersDefine.cs" />
     <Compile Include="Assets\Scripts\Utility\LuaHelper.cs" />
     <Compile Include="Assets\Scripts\Utility\ScreenConfig.cs" />

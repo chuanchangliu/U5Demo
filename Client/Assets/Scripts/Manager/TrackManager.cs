@@ -1,60 +1,132 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using System.IO;
+using System;
 using UnityEngine;
+
+public class LogOutput
+{
+
+#if UNITY_EDITOR
+    string _persistentPath = Application.dataPath + "/../PersistentPath";
+#elif UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX
+    string _persistentPath = Application.dataPath + "/PersistentPath";
+#else
+    string _persistentPath = Application.persistentDataPath;
+#endif
+
+    private readonly object _lockObj;
+    private bool _isRunning = false;
+    private Thread _logThread = null;
+    private StreamWriter _logWriter = null;
+
+    private Queue<LogData> _writingQueue = null;
+    private Queue<LogData> _waitingQueue = null;
+
+    public LogOutput()
+    {
+        _lockObj = new object();
+
+        GameMaster.Instance.onApplicationQuit += Fini;
+
+        _writingQueue = new Queue<LogData>();
+        _waitingQueue = new Queue<LogData>();
+
+        System.DateTime now = System.DateTime.Now;
+        string logName = string.Format("Q{0}_{1:D2}_{2:D2}_{3:D2}{4:D2}{5:D2}", now.Year, now.Month, now.Day, now.Hour, now.Minute, now.Second);
+        string logPath = string.Format("{0}/Log/{1}.txt", _persistentPath, logName);
+        if (File.Exists(logPath)) File.Delete(logPath);
+
+        string logFold = Path.GetDirectoryName(logPath);
+        if (!Directory.Exists(logFold))
+            Directory.CreateDirectory(logFold);
+
+        _logWriter = new StreamWriter(logPath);
+        _logWriter.AutoFlush = true;
+
+        _isRunning = true;
+        _logThread = new Thread(new ThreadStart(OutputLog));
+        _logThread.Start();
+    }
+
+    //输出log信息到文件
+    void OutputLog()
+    {
+        while (_isRunning)
+        {
+            if (_writingQueue.Count == 0)
+            {
+                lock (_lockObj)
+                {
+                    while (_waitingQueue.Count == 0)
+                    {
+                        Monitor.Wait(_lockObj);
+                    }
+
+                    Queue<LogData> tmpQueue = _writingQueue;
+                    _writingQueue = _waitingQueue;
+                    _waitingQueue = tmpQueue;
+                }
+            }
+            else
+            {
+                while (this._writingQueue.Count > 0)
+                {
+                    LogData logData = _writingQueue.Dequeue();
+                    _logWriter.WriteLine(logData.log);
+                    if (logData.type == LogType.Error)
+                    {
+                        _logWriter.WriteLine("=============Error Track============");
+                        _logWriter.WriteLine(logData.track);
+                        _logWriter.WriteLine("=============Error Over!============");
+                    }
+                    else if(logData.type == LogType.Exception)
+                    {
+                        _logWriter.WriteLine("=============Exception Track============");
+                        _logWriter.WriteLine(logData.track);
+                        _logWriter.WriteLine("=============Exception Over!============");
+                    }
+                }
+            }
+        }
+    }
+
+    public void Log(LogData logData)
+    {
+        lock (_lockObj)
+        {
+            _waitingQueue.Enqueue(logData);
+            Monitor.Pulse(_lockObj);
+        }
+    }
+
+    public void Fini()
+    {
+        Debug.Log("====LogOutput Fini====");
+        _isRunning = false;
+        _logWriter.Close();
+    }
+
+}
+
+
 
 public class TrackManager : NormSingleton<TrackManager>
 {
-
-    public enum LogLevel
-    {
-        LOG = 0,
-        WARNING,
-        ASSERT,
-        ERROR,
-        MAX
-    }
-
-    public class LogData
-    {
-        public string Log { get; set; }
-        public string Track { get; set; }
-        public LogLevel Level { get; set; }
-    }
-
-    public LogLevel needOutputLv = LogLevel.LOG;
-    public LogLevel needRecordLv = LogLevel.MAX;
-
-    private Dictionary<LogType, LogLevel> _type2Level = null;
-
     private LogOutput _logOutput = null;
-
     private int _mainThreadID = -1;
-    
 
     private TrackManager()
     {
-        needOutputLv = LogLevel.LOG;
-        needRecordLv = LogLevel.ERROR;
         _mainThreadID = Thread.CurrentThread.ManagedThreadId;
+        _logOutput = new LogOutput();
     }
 
     public void Init()
     {
         Application.logMessageReceived += LogCallback;
         Application.logMessageReceivedThreaded += LogMultiThreadCallback;
-
-        //LogType的enum定义顺序与自定义的不同
-        _type2Level = new Dictionary<LogType, LogLevel>
-        {
-            { LogType.Log, LogLevel.LOG },
-            { LogType.Warning, LogLevel.WARNING },
-            { LogType.Assert, LogLevel.ASSERT },
-            { LogType.Error, LogLevel.ERROR },
-            { LogType.Exception, LogLevel.ERROR },
-        };
-
-        _logOutput = new LogOutput();
         GameMaster.Instance.onDestroy += Fini;
     }
 
@@ -84,14 +156,7 @@ public class TrackManager : NormSingleton<TrackManager>
 
     void Output(string log, string track, LogType type)
     {
-        LogLevel level = _type2Level[type];
-        LogData logData = new LogData
-        {
-            Log = log,
-            Track = track,
-            Level = level,
-        };
- 
+        LogData logData = new LogData(log, track, type);
         _logOutput.Log(logData);
     }
 }

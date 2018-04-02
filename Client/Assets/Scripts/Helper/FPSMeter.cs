@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FPSMeter : MonoBehaviour {
+public class FPSMeter : MonoBehaviour
+{
 
     private float intervalTime = 1.0f;
     private float consumeTime;
     private int frameCount = 0;
     private float fpsMeter;
- 
+
     private void Start()
     {
         consumeTime = 0.0f;
@@ -18,7 +19,7 @@ public class FPSMeter : MonoBehaviour {
     {
         frameCount = frameCount + 1;
         consumeTime = consumeTime + Time.deltaTime;
-        if(consumeTime > intervalTime)
+        if (consumeTime > intervalTime)
         {
             fpsMeter = frameCount / consumeTime;
             consumeTime = 0;
