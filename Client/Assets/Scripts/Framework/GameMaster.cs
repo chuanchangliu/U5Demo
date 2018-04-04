@@ -16,6 +16,7 @@ public class GameMaster : MonoSingleton<GameMaster>
         Debug.Log("====GameMaster Init====");
         DontDestroyOnLoad(gameObject);
         CreateManagers();
+        StartCoroutine(GameStartUp());
     }
 
     // Use this for initialization
@@ -37,12 +38,15 @@ public class GameMaster : MonoSingleton<GameMaster>
     {
         TrackManager.Instance.Init();
         AudioManager.Instance.Init();
+        UpdateManager.Instance.Init();
     }
 
     IEnumerator GameStartUp()
     {
         Debug.Log("====Game Awake=====");
-        yield break;
+
+        foreach (var item in UpdateManager.Instance.UpdateCoroutine())
+            yield return item;
     }
 
     void OnApplicationQuit()

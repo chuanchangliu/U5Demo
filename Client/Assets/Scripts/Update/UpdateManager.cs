@@ -42,7 +42,7 @@ public struct VersionCompatible
 }
 
 
-public class UpdateManager{
+public class UpdateManager : NormSingleton<UpdateManager>{
 #if UNITY_IPHONE || UNITY_XBOX360
 	private const string IMPORT_NAME = "__Internal";
 #else
@@ -51,18 +51,7 @@ public class UpdateManager{
 
     private UpdateManager()
     {
-        ReadStringTable();
-    }
-
-    private static UpdateManager _instance;
-    public static UpdateManager Instance
-    {
-        get
-        {
-            if (_instance == null)
-                _instance = new UpdateManager();
-            return _instance;
-        }
+        
     }
 
     private Dictionary<String, String> _stringMap;
@@ -111,6 +100,18 @@ public class UpdateManager{
 
     /*[DllImport(IMPORT_NAME)] //是否把内部资源拷贝到外部
     private extern static void exp_af_SetCopyBackupFilePackage(bool bCopy);*/
+
+
+    public void Init()
+    {
+        ReadStringTable();
+    }
+
+    IEnumerator InitCoroutine()
+    {
+        foreach (var item in UpdateCoroutine())
+            yield return item;
+    }
 
     public IEnumerable UpdateCoroutine()
     {
