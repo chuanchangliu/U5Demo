@@ -15,6 +15,7 @@ public class GameMaster : MonoSingleton<GameMaster>
     {
         Debug.Log("====GameMaster Init====");
         DontDestroyOnLoad(gameObject);
+
         CreateManagers();
         StartCoroutine(GameStartUp());
     }

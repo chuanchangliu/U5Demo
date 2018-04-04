@@ -107,12 +107,6 @@ public class UpdateManager : NormSingleton<UpdateManager>{
         ReadStringTable();
     }
 
-    IEnumerator InitCoroutine()
-    {
-        foreach (var item in UpdateCoroutine())
-            yield return item;
-    }
-
     public IEnumerable UpdateCoroutine()
     {
         //exp_af_SetCopyBackupFilePackage(false);

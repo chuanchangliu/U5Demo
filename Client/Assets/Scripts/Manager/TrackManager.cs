@@ -34,7 +34,7 @@ public class LogOutput
         _waitingQueue = new Queue<LogData>();
 
         System.DateTime now = System.DateTime.Now;
-        string logName = string.Format("Q{0}_{1:D2}_{2:D2}_{3:D2}{4:D2}{5:D2}", now.Year, now.Month, now.Day, now.Hour, now.Minute, now.Second);
+        string logName = string.Format("Track_{0}_{1:D2}_{2:D2}_{3:D2}{4:D2}{5:D2}", now.Year, now.Month, now.Day, now.Hour, now.Minute, now.Second);
         string logPath = string.Format("{0}/Log/{1}.txt", _persistentPath, logName);
         if (File.Exists(logPath)) File.Delete(logPath);
 
